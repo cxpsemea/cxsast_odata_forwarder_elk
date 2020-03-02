@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "testCx",
+            "command": "npm",
+            "args": ["run-script","test:cx"],
+            "type": "shell"
+        },
+        {
+            "label": "dockerBuild",
+            "command": "docker",
+            "args": ["build","-t","cxsizing","."],
+            "type": "shell"
+        }
+    ]
+}
