@@ -61,7 +61,7 @@ async function processData() {
         json.projectSchedulingExpression = project.SchedulingExpression;
         json.projectTotalScans = project.TotalProjectScanCount;
 
-        for (var j = 0; j < scans.length; j++) {
+        for (var j = 0; scans && j < scans.length ; j++) {
             var scan = scans[j],
                 scanJson = JSON.parse(JSON.stringify(json));
             scanJson.scanId = scan.Id;
@@ -118,7 +118,7 @@ async function processData() {
             projectScans.push(scanJson);
         }
 
-        if (scans.length == 0) {
+        if (!scans || scans.length == 0) {
             projectScans.push(json);
         }
 
@@ -126,10 +126,12 @@ async function processData() {
         if (data.errors) {
             log.error(data.errors);
         }
-        printProgress(i, projects.length, project.Scans.length);
+        if(projects && projects.length && project && project.Scans){
+            printProgress(i, projects.length, project.Scans.length);
+        }
         esScans = esScans.concat(projectScans);
     }
-    if (projects.length > 0) {
+    if (projects && projects.length > 0) {
 
         /*var isAvailable = await kb.isAvailable();
         if (isAvailable) {
